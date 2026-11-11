@@ -1,4 +1,11 @@
+# OS / editor
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
+# Local development
+.env
+.env.*
+*.log
+node_modules/

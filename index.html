@@ -20,7 +20,7 @@
         <span class="brand-mark">✦</span>
         <span><span class="brand-name">GAMEHUB</span><span class="brand-sub">MINI GAME ARENA</span></span>
       </a>
-      <div class="topbar-right"><span class="live-dot"></span><span>چهار بازی · یک میدان رقابت</span><span class="top-badge">نسخه وب 2.0</span></div>
+      <div class="topbar-right"><span class="live-dot"></span><span>چهار بازی · یک میدان رقابت</span><span class="top-badge">نسخه وب 2.1</span></div>
     </header>
 
     <section class="hero" id="home">
@@ -67,14 +67,15 @@
     </section>
 
     <section id="snake-panel" class="game-panel" aria-labelledby="snake-title">
-      <div class="panel-head"><div><div class="panel-kicker">ARCADE CLASSIC · 01</div><h2 id="snake-title">مار نئونی</h2><p>غذاها را جمع کن، طول مار را بیشتر کن و با دیوار یا دم خودت برخورد نکن.</p></div><div class="panel-tag">SNAKE <span>🐍</span></div></div>
+      <div class="panel-head"><div><div class="panel-kicker">ARCADE CLASSIC · 01</div><h2 id="snake-title">مار نئونی</h2><p>غذاهای انرژی‌زا و میوه‌های طلایی را شکار کن، کمبو بساز و سرعتت را تا مرحله‌های بالاتر مدیریت کن.</p></div><div class="panel-tag">SNAKE <span>🐍</span></div></div>
       <div class="game-card arcade-card">
-        <div class="arcade-topline"><div class="arcade-badge"><span class="pulse-dot"></span> ARCADE MODE</div><div class="control-tip">کنترل: کلیدهای جهت‌دار یا WASD</div></div>
+        <div class="arcade-topline"><div class="arcade-badge"><span class="pulse-dot"></span> ARCADE MODE</div><div class="arcade-options"><label class="arcade-select">سرعت بازی<select id="snake-difficulty" aria-label="سرعت بازی مار"><option value="chill">آرام</option><option value="normal" selected>معمولی</option><option value="turbo">سریع</option></select></label><div class="control-tip">کنترل: جهت‌ها یا WASD</div></div></div>
         <div class="arcade-stats">
           <div class="arcade-stat"><span>امتیاز</span><strong id="snake-score">۰</strong></div>
           <div class="arcade-stat"><span>رکورد</span><strong id="snake-best">۰</strong></div>
           <div class="arcade-stat"><span>سرعت</span><strong id="snake-speed">۱٫۰×</strong></div>
         </div>
+        <div class="arcade-status-strip"><span id="snake-level-label">مرحله ۱</span><span id="snake-combo">کمبو: آماده</span><span>میوه طلایی: +۵</span></div>
         <div class="canvas-shell snake-shell"><canvas id="snake-canvas" width="720" height="504" aria-label="صفحه بازی مار"></canvas><div class="canvas-overlay" id="snake-overlay"><div class="overlay-icon">🐍</div><h3>آماده‌ای رکورد بزنی؟</h3><p>با خوردن انرژی‌ها بزرگ‌تر شو؛ مراقب مسیرت باش!</p><button class="btn primary big-btn" data-action="snake-start">شروع بازی</button></div></div>
         <div class="game-controls"><div class="control-cluster"><button class="btn primary" data-action="snake-start">شروع / ادامه</button><button class="btn" data-action="snake-pause">توقف</button><button class="btn" data-action="snake-restart">شروع مجدد ↻</button></div><label class="sound-toggle"><input type="checkbox" id="sound-toggle" checked><span class="toggle-ui"></span><span>صدا</span></label></div>
         <div class="mobile-pad" aria-label="کنترل لمسی مار"><button data-action="snake-dir" data-value="up" aria-label="بالا">▲</button><div><button data-action="snake-dir" data-value="left" aria-label="چپ">◀</button><button data-action="snake-dir" data-value="down" aria-label="پایین">▼</button><button data-action="snake-dir" data-value="right" aria-label="راست">▶</button></div></div>
@@ -83,7 +84,7 @@
     </section>
 
     <section id="breaker-panel" class="game-panel" aria-labelledby="breaker-title">
-      <div class="panel-head"><div><div class="panel-kicker">ARCADE CLASSIC · 02</div><h2 id="breaker-title">آجرشکن نئونی</h2><p>توپ را در بازی نگه دار، دیوار آجرها را خرد کن و مرحله‌ها را پشت سر بگذار.</p></div><div class="panel-tag">BRICK BREAKER <span>🧱</span></div></div>
+      <div class="panel-head"><div><div class="panel-kicker">ARCADE CLASSIC · 02</div><h2 id="breaker-title">آجرشکن نئونی</h2><p>با برخوردهای دقیق، کمبو و پاورآپ‌های چندگانه دیوار آجرها را مرحله‌به‌مرحله نابود کن.</p></div><div class="panel-tag">BRICK BREAKER <span>🧱</span></div></div>
       <div class="game-card arcade-card">
         <div class="arcade-topline"><div class="arcade-badge"><span class="pulse-dot"></span> NEON BREAKOUT</div><div class="control-tip">کنترل: حرکت موس، لمس یا کلیدهای چپ و راست</div></div>
         <div class="arcade-stats four-stats">
@@ -92,13 +93,14 @@
           <div class="arcade-stat"><span>مرحله</span><strong id="breaker-level">۱</strong></div>
           <div class="arcade-stat"><span>جان</span><strong id="breaker-lives">۳</strong></div>
         </div>
+        <div class="arcade-status-strip"><span id="breaker-combo">کمبو: آماده</span><span id="breaker-power">بدون قدرت فعال</span><span>پاورآپ‌ها را بگیر</span></div>
         <div class="canvas-shell breaker-shell"><canvas id="breaker-canvas" width="720" height="486" aria-label="صفحه بازی آجرشکن"></canvas><div class="canvas-overlay" id="breaker-overlay"><div class="overlay-icon">🧱</div><h3>آماده شکستن رکوردی؟</h3><p>با توپ به آجرها ضربه بزن؛ نگذار توپ از کنترل خارج شود.</p><button class="btn primary big-btn" data-action="breaker-start">شروع بازی</button></div></div>
         <div class="game-controls"><div class="control-cluster"><button class="btn primary" data-action="breaker-start">شروع / پرتاب توپ</button><button class="btn" data-action="breaker-pause">توقف</button><button class="btn" data-action="breaker-restart">شروع مجدد ↻</button></div><label class="sound-toggle"><input type="checkbox" id="sound-toggle-breaker" checked><span class="toggle-ui"></span><span>صدا</span></label></div>
-        <p class="hint">در هر مرحله سرعت و چیدمان آجرها تغییر می‌کند. با کلید Space بازی را مکث یا ادامه بده.</p>
+        <p class="hint">پاورآپ‌ها: پدل عریض، توپ آهسته، توپ چندگانه و جان اضافه. با Space بازی را مکث یا ادامه بده.</p>
       </div>
     </section>
 
-    <footer class="footer"><span>GAMEHUB <strong>· نسخه 2.0</strong></span><span>چهار بازی، بی‌نهایت چالش <b>✦</b></span></footer>
+    <footer class="footer"><span>GAMEHUB <strong>· نسخه 2.1 ARCADE UPGRADE</strong></span><span>چهار بازی، بی‌نهایت چالش <b>✦</b></span></footer>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

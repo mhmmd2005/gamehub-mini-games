@@ -41,3 +41,25 @@ h1{font-size:clamp(27px,4vw,42px);line-height:1.45;margin:0 0 8px;font-weight:90
 @media(max-width:760px){.app{width:min(100% - 22px,620px);padding-top:15px}.topbar{margin-bottom:21px}.topbar-right{font-size:9px}.top-badge{display:none}.tabs{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.tab{padding:10px 4px;font-size:10px}.tab span{margin-left:2px}.hero-stats{gap:9px}.panel-head{align-items:flex-start}.game-card{padding:13px;border-radius:20px}.toolbar{align-items:flex-start}.difficulty-wrap{width:100%;justify-content:flex-start}.board{grid-template-columns:repeat(3,minmax(72px,100px));gap:7px}.cell{border-radius:14px;font-size:38px}.rps-stage{gap:9px}.fighter{padding:12px 5px}.fighter-pick{min-height:70px;font-size:42px}.move{min-height:99px}.move-emoji{font-size:29px}.score{padding:10px 9px}.score-value{font-size:21px}.arcade-card{padding:12px}.arcade-stat{padding:8px 9px;display:flex;flex-direction:column;align-items:flex-start;gap:0}.arcade-stat strong{font-size:17px}.control-tip{font-size:9px}.mobile-pad{display:flex}.game-controls{align-items:flex-start}.control-cluster{gap:6px}.control-cluster .btn{padding:9px 10px;font-size:10px}}
 @media(max-width:430px){.tab{font-size:9px}.tab span{display:block;margin:0 0 2px;font-size:15px}.topbar-right{font-size:8px}.brand-mark{width:40px;height:40px}.panel-head h2{font-size:19px}.panel-tag{font-size:8px;padding:6px 8px}.segmented{width:100%}.segmented button{flex:1;padding:8px 7px}.board{grid-template-columns:repeat(3,minmax(65px,86px))}.move{min-height:91px}.arcade-topline{align-items:flex-start;flex-direction:column}.arcade-stat span{font-size:9px}.arcade-stat strong{font-size:16px}.four-stats{gap:5px}.game-controls{flex-direction:column}.sound-toggle{align-self:flex-end}.canvas-overlay h3{font-size:16px}.canvas-overlay p{font-size:10px}.footer{flex-direction:column;text-align:center}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Arcade 2.1: difficulty controls, live status chips and polished canvas surfaces */
+.arcade-options{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.arcade-select{display:flex;align-items:center;gap:7px;color:#9ab3c9;font-size:10px;font-weight:700}
+.arcade-select select{appearance:none;border:1px solid rgba(97,190,218,.25);border-radius:10px;background:#102a42;color:#dffaff;padding:7px 27px 7px 10px;font:700 10px "Vazirmatn",sans-serif;cursor:pointer;outline:none;background-image:linear-gradient(45deg,transparent 50%,#7ddfd8 50%),linear-gradient(135deg,#7ddfd8 50%,transparent 50%);background-position:10px 12px,6px 12px;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
+.arcade-select select:focus{border-color:#55dfd0;box-shadow:0 0 0 3px rgba(85,223,208,.12)}
+.arcade-status-strip{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:-1px 0 10px;color:#91adc4;font-size:10px}
+.arcade-status-strip span{display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:4px 10px;border:1px solid rgba(103,179,215,.13);border-radius:999px;background:rgba(7,22,37,.55)}
+.arcade-status-strip span:first-child{color:#77efdb;border-color:rgba(78,224,201,.22)}
+.canvas-shell{isolation:isolate;border-color:rgba(91,205,220,.28);box-shadow:inset 0 0 42px rgba(0,0,0,.45),0 0 0 1px rgba(47,120,166,.08),0 18px 48px rgba(0,0,0,.25)}
+.canvas-shell:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 34px rgba(60,201,213,.055)}
+.canvas-shell canvas{position:relative;z-index:0}
+.canvas-overlay{z-index:2;background:radial-gradient(ellipse at 50% 42%,rgba(11,43,62,.86),rgba(4,13,25,.94));}
+.overlay-icon{animation:arcadeFloat 2.4s ease-in-out infinite;}
+@keyframes arcadeFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
+.pulse-dot{box-shadow:0 0 0 0 rgba(75,236,194,.48);animation:arcadePing 1.9s infinite}
+@keyframes arcadePing{70%{box-shadow:0 0 0 8px rgba(75,236,194,0)}100%{box-shadow:0 0 0 0 rgba(75,236,194,0)}}
+.arcade-stat strong{transition:color .2s,transform .2s;text-shadow:0 0 16px rgba(74,220,218,.16)}
+.mobile-pad button{touch-action:manipulation;box-shadow:0 5px 14px rgba(0,0,0,.16);transition:transform .12s,background .12s,border-color .12s}
+.mobile-pad button:active{transform:scale(.94);border-color:rgba(88,245,218,.65)}
+@media(max-width:760px){.arcade-options{width:100%;justify-content:space-between}.arcade-select{font-size:9px}.arcade-status-strip{font-size:9px;gap:5px}.arcade-status-strip span{padding:4px 7px}.canvas-shell canvas{width:100%}}
+@media(max-width:430px){.arcade-options{align-items:flex-start;flex-direction:column}.arcade-status-strip span{font-size:8px}.arcade-select select{padding-top:6px;padding-bottom:6px}}
