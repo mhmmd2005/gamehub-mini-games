@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08111f">
+  <meta name="description" content="مرکز بازی‌های دوز و سنگ کاغذ قیچی؛ بازی با هوش مصنوعی یا دونفره.">
+  <title>GameHub | دوز و سنگ کاغذ قیچی</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07111e;
+      --surface: #0d1b2c;
+      --surface-2: #12243a;
+      --surface-3: #172c45;
+      --line: rgba(156, 190, 226, .13);
+      --text: #f3f7ff;
+      --muted: #8ea4bd;
+      --blue: #58baff;
+      --cyan: #51e0d0;
+      --green: #59e5a7;
+      --pink: #ff7197;
+      --gold: #ffcf70;
+      --shadow: 0 24px 70px rgba(0,0,0,.28);
+      font-family: "Vazirmatn", Tahoma, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      min-height: 100vh; margin: 0; color: var(--text);
+      background:
+        radial-gradient(ellipse at 12% 5%, rgba(35,112,166,.22), transparent 34%),
+        radial-gradient(ellipse at 90% 72%, rgba(35,133,133,.12), transparent 32%),
+        linear-gradient(145deg, #07111e, #0a192b 55%, #091625);
+    }
+    button { font: inherit; }
+    .app { width: min(1100px, calc(100% - 34px)); margin: 0 auto; padding: 24px 0 34px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
+    .brand { display:flex; align-items:center; gap:12px; direction:ltr; }
+    .brand-mark { width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#1d70ad,#174e74);box-shadow:0 8px 28px rgba(42,155,225,.2);font-size:22px; }
+    .brand-name { font:900 17px/1.1 "Vazirmatn",sans-serif;letter-spacing:1.1px; }
+    .brand-sub { font:500 10px/1.6 "Vazirmatn",sans-serif;color:var(--muted);letter-spacing:2px; }
+    .top-badge { border:1px solid var(--line);background:rgba(19,39,61,.72);color:#b7c9dc;border-radius:999px;padding:8px 13px;font-size:11px; }
+    .hero { text-align:center; margin: 0 auto 25px; max-width:720px; }
+    .eyebrow { color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1.8px;margin-bottom:10px; }
+    h1 { font-size:clamp(25px,4vw,38px);line-height:1.45;margin:0 0 8px;font-weight:900; }
+    .hero p { color:var(--muted);font-size:13px;line-height:2;margin:0; }
+    .tabs { display:flex;justify-content:center;gap:9px;margin:24px auto 21px;padding:6px;width:max-content;max-width:100%;background:rgba(10,25,42,.88);border:1px solid var(--line);border-radius:18px; }
+    .tab { border:0;border-radius:13px;background:transparent;color:var(--muted);padding:11px 22px;cursor:pointer;font-size:13px;font-weight:800;transition:.2s; }
+    .tab:hover { color:var(--text);background:rgba(255,255,255,.04); }
+    .tab.active { color:#061522;background:linear-gradient(135deg,var(--cyan),#74cfff);box-shadow:0 7px 24px rgba(70,207,207,.16); }
+    .game-panel { display:none;animation:appear .28s ease both; }
+    .game-panel.active { display:block; }
+    @keyframes appear { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+    .panel-head { display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:0 2px 16px; }
+    .panel-head h2 { margin:0;font-size:20px;font-weight:900; }
+    .panel-head p { color:var(--muted);font-size:11px;margin:4px 0 0; }
+    .panel-tag { border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:#a9bfd5;font-size:10px;white-space:nowrap; }
+    .game-card { background:linear-gradient(145deg,rgba(16,35,56,.96),rgba(11,27,44,.96));border:1px solid var(--line);border-radius:25px;padding:20px;box-shadow:var(--shadow); }
+    .toolbar { display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:17px; }
+    .segmented { display:flex;gap:5px;background:#091827;border:1px solid var(--line);border-radius:13px;padding:4px; }
+    .segmented button { border:0;background:transparent;color:var(--muted);border-radius:9px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;transition:.18s; }
+    .segmented button.active { color:#fff;background:#1b5273;box-shadow:inset 0 0 0 1px rgba(91,190,241,.25); }
+    .difficulty-wrap { display:flex;align-items:center;gap:9px;color:var(--muted);font-size:11px; }
+    select { color:var(--text);background:#0a1929;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;font-size:11px;outline:none; }
+    select:focus-visible,button:focus-visible { outline:2px solid var(--cyan);outline-offset:3px; }
+    .score-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:17px; }
+    .score { position:relative;overflow:hidden;background:rgba(8,23,38,.72);border:1px solid var(--line);border-radius:15px;padding:12px 14px;min-height:75px; }
+    .score::before { content:"";position:absolute;right:0;top:13px;bottom:13px;width:3px;border-radius:5px;background:var(--accent); }
+    .score-label { color:var(--muted);font-size:10px; }
+    .score-value { font-size:24px;font-weight:900;line-height:1.5;color:var(--accent); }
+    .status { display:flex;align-items:center;justify-content:center;gap:9px;min-height:45px;margin:0 auto 15px;padding:9px 14px;text-align:center;background:rgba(5,17,29,.55);border:1px solid var(--line);border-radius:13px;color:#dceaff;font-size:12px;font-weight:700; }
+    .status-dot { width:7px;height:7px;border-radius:50%;background:var(--status,var(--cyan));box-shadow:0 0 12px var(--status,var(--cyan));flex:none; }
+    .board-wrap { display:grid;place-items:center;padding:5px 0 14px; }
+    .board { direction:ltr;display:grid;grid-template-columns:repeat(3, minmax(82px,112px));gap:9px; }
+    .cell { aspect-ratio:1;border:1px solid rgba(133,174,211,.16);border-radius:18px;background:linear-gradient(145deg,#142943,#0d1d30);color:white;font:800 44px/1 "Vazirmatn",sans-serif;cursor:pointer;display:grid;place-items:center;transition:transform .15s,border-color .15s,background .15s,box-shadow .15s; }
+    .cell:not(:disabled):hover { transform:translateY(-3px);border-color:rgba(83,192,243,.6);background:#193451;box-shadow:0 9px 25px rgba(0,0,0,.17); }
+    .cell:disabled { cursor:default; }
+    .cell.x { color:var(--blue);text-shadow:0 0 23px rgba(88,186,255,.28); }
+    .cell.o { color:var(--pink);text-shadow:0 0 23px rgba(255,113,151,.25); }
+    .cell.winner { background:linear-gradient(145deg,rgba(27,102,81,.65),rgba(17,66,58,.78));border-color:var(--green);box-shadow:0 0 22px rgba(89,229,167,.14);animation:winpulse .8s ease-in-out infinite alternate; }
+    @keyframes winpulse { to{box-shadow:0 0 28px rgba(89,229,167,.28)} }
+    .actions { display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:3px; }
+    .btn { border:1px solid var(--line);border-radius:12px;padding:10px 17px;background:#152b43;color:#d8e9fa;cursor:pointer;font-size:11px;font-weight:800;transition:.18s; }
+    .btn:hover { transform:translateY(-2px);background:#1b3b5a;border-color:rgba(103,186,235,.45); }
+    .btn.primary { background:linear-gradient(135deg,#1e76a7,#2567a7);border-color:rgba(104,194,246,.34);color:white; }
+    .btn.primary:hover { background:linear-gradient(135deg,#278dc2,#2e79c1); }
+    .hint { text-align:center;color:#718aa4;font-size:10px;margin:15px 0 0; }
+    /* Rock-paper-scissors */
+    .rps-score .score { min-height:82px; }
+    .rps-stage { display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;max-width:660px;margin:14px auto 20px; }
+    .fighter { text-align:center;background:rgba(6,19,32,.55);border:1px solid var(--line);border-radius:18px;padding:17px 10px;min-width:0; }
+    .fighter-label { color:var(--muted);font-size:11px;font-weight:700; }
+    .fighter-pick { display:grid;place-items:center;min-height:84px;font-size:49px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.2)); }
+    .fighter-name { font-size:12px;font-weight:800; }
+    .versus { color:var(--gold);font:900 17px/1 "Vazirmatn",sans-serif;letter-spacing:1px; }
+    .move-title { text-align:center;font-size:12px;font-weight:800;margin:7px 0 12px; }
+    .moves { display:grid;grid-template-columns:repeat(3,1fr);gap:11px;max-width:570px;margin:0 auto; }
+    .move { min-height:116px;background:linear-gradient(145deg,#172e48,#102239);border:1px solid var(--line);border-radius:17px;color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;transition:.2s; }
+    .move:hover:not(:disabled) { transform:translateY(-4px);border-color:var(--cyan);background:#1a3a55;box-shadow:0 12px 25px rgba(0,0,0,.2); }
+    .move:disabled { opacity:.5;cursor:not-allowed; }
+    .move-emoji { font-size:34px;line-height:1.3; }
+    .move-name { font-size:12px;font-weight:800; }
+    .rps-result { max-width:570px;margin:16px auto 0;min-height:51px;display:grid;place-items:center;text-align:center;padding:11px 15px;background:rgba(5,17,29,.56);border:1px solid var(--line);border-radius:13px;color:var(--muted);font-size:12px;line-height:1.8; }
+    .rps-result.win { color:var(--green);border-color:rgba(89,229,167,.3); }
+    .rps-result.loss { color:var(--pink);border-color:rgba(255,113,151,.3); }
+    .rps-result.draw { color:var(--gold);border-color:rgba(255,207,112,.3); }
+    .footer { display:flex;justify-content:space-between;gap:12px;align-items:center;margin:17px 4px 0;color:#6f879f;font-size:10px; }
+    .footer strong { color:#9db3c9;font-weight:700; }
+    .toast { position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#16364e;border:1px solid rgba(92,206,214,.35);color:#eaffff;padding:10px 17px;border-radius:12px;font-size:12px;transition:.25s;z-index:5;box-shadow:var(--shadow); }
+    .toast.show { opacity:1;transform:translate(-50%,0); }
+    @media (max-width:650px) {
+      .app { width:min(100% - 22px, 540px);padding-top:15px; }
+      .topbar { margin-bottom:22px; }
+      .top-badge { font-size:9px;padding:7px 9px; }
+      .brand-mark { width:39px;height:39px; }
+      .panel-head { align-items:flex-start; }
+      .game-card { padding:13px;border-radius:20px; }
+      .toolbar { align-items:flex-start; }
+      .difficulty-wrap { width:100%;justify-content:flex-start; }
+      .board { grid-template-columns:repeat(3,minmax(72px,100px));gap:7px; }
+      .cell { border-radius:14px;font-size:38px; }
+      .rps-stage { gap:9px; }
+      .fighter { padding:12px 5px; }
+      .fighter-pick { min-height:70px;font-size:42px; }
+      .move { min-height:103px; }
+      .move-emoji { font-size:29px; }
+      .score { padding:10px 9px; }
+      .score-value { font-size:21px; }
+      .footer { flex-direction:column;text-align:center; }
+    }
+    @media (max-width:390px) {
+      .tab { padding:10px 13px;font-size:11px; }
+      .segmented button { padding:8px 9px; }
+      .board { grid-template-columns:repeat(3,minmax(65px,86px)); }
+      .move { min-height:94px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms!important;transition-duration:.01ms!important; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand" aria-label="GameHub">
+        <div class="brand-mark">✦</div>
+        <div><div class="brand-name">GAMEHUB</div><div class="brand-sub">MINI GAME ARENA</div></div>
+      </div>
+      <div class="top-badge">نسخه وب · ذخیره خودکار امتیازها</div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">بازی کن · رقابت کن · رکورد بزن</div>
+      <h1>به میدان بازی خوش آمدی</h1>
+      <p>دو بازی کلاسیک در یک محیط؛ با دوستت رقابت کن یا هوش مصنوعی را به چالش بکش.</p>
+    </section>
+
+    <nav class="tabs" aria-label="انتخاب بازی">
+      <button class="tab active" data-action="tab" data-value="ttt" aria-selected="true">⭕ بازی دوز</button>
+      <button class="tab" data-action="tab" data-value="rps" aria-selected="false">✊ سنگ، کاغذ، قیچی</button>
+    </nav>
+
+    <section id="ttt-panel" class="game-panel active" aria-labelledby="ttt-title">
+      <div class="panel-head">
+        <div><h2 id="ttt-title">بازی دوز</h2><p>سه علامت یکسان را در یک ردیف، ستون یا قطر قرار بده.</p></div>
+        <div class="panel-tag">TIC · TAC · TOE</div>
+      </div>
+      <div class="game-card">
+        <div class="toolbar">
+          <div class="segmented" aria-label="حالت بازی دوز">
+            <button class="active" data-action="ttt-mode" data-value="ai">مقابل هوش مصنوعی</button>
+            <button data-action="ttt-mode" data-value="pvp">دونفره</button>
+          </div>
+          <label class="difficulty-wrap" id="ttt-difficulty-wrap">درجه سختی
+            <select id="ttt-difficulty" aria-label="درجه سختی دوز">
+              <option value="easy">آسان</option><option value="medium">متوسط</option><option value="hard" selected>حرفه‌ای</option>
+            </select>
+          </label>
+        </div>
+        <div class="score-grid" id="ttt-scores"></div>
+        <div class="status" id="ttt-status" role="status" aria-live="polite"><span class="status-dot"></span><span>نوبت شماست · X</span></div>
+        <div class="board-wrap"><div class="board" id="ttt-board" aria-label="صفحه بازی دوز"></div></div>
+        <div class="actions">
+          <button class="btn primary" data-action="ttt-new">شروع دور جدید ↻</button>
+          <button class="btn" data-action="ttt-reset">صفر کردن امتیازها</button>
+        </div>
+        <p class="hint">در حالت حرفه‌ای، هوش مصنوعی با الگوریتم Minimax بازی می‌کند.</p>
+      </div>
+    </section>
+
+    <section id="rps-panel" class="game-panel" aria-labelledby="rps-title">
+      <div class="panel-head">
+        <div><h2 id="rps-title">سنگ، کاغذ، قیچی</h2><p>حرکتت را انتخاب کن؛ هوش مصنوعی هم‌زمان انتخابش را رو می‌کند.</p></div>
+        <div class="panel-tag">ROCK · PAPER · SCISSORS</div>
+      </div>
+      <div class="game-card">
+        <div class="toolbar">
+          <div class="difficulty-wrap">حالت بازی <strong style="color:var(--cyan)">فقط مقابل هوش مصنوعی</strong></div>
+          <label class="difficulty-wrap">قدرت هوش مصنوعی
+            <select id="rps-difficulty" aria-label="قدرت هوش مصنوعی سنگ کاغذ قیچی">
+              <option value="easy">آسان</option><option value="medium">متوسط</option><option value="hard" selected>هوشمند</option>
+            </select>
+          </label>
+        </div>
+        <div class="score-grid rps-score" id="rps-scores"></div>
+        <div class="rps-stage">
+          <div class="fighter">
+            <div class="fighter-label">انتخاب تو</div>
+            <div class="fighter-pick" id="rps-player-pick">❔</div>
+            <div class="fighter-name">بازیکن</div>
+          </div>
+          <div class="versus">VS</div>
+          <div class="fighter">
+            <div class="fighter-label">انتخاب هوش مصنوعی</div>
+            <div class="fighter-pick" id="rps-ai-pick">🤖</div>
+            <div class="fighter-name">AI</div>
+          </div>
+        </div>
+        <div class="move-title">حرکت خودت را انتخاب کن</div>
+        <div class="moves">
+          <button class="move" data-action="rps-move" data-value="rock"><span class="move-emoji">✊</span><span class="move-name">سنگ</span></button>
+          <button class="move" data-action="rps-move" data-value="paper"><span class="move-emoji">✋</span><span class="move-name">کاغذ</span></button>
+          <button class="move" data-action="rps-move" data-value="scissors"><span class="move-emoji">✌️</span><span class="move-name">قیچی</span></button>
+        </div>
+        <div class="rps-result" id="rps-result" role="status" aria-live="polite">منتظر انتخاب تو هستم. کدام را انتخاب می‌کنی؟</div>
+        <div class="actions" style="margin-top:15px">
+          <button class="btn" data-action="rps-reset">صفر کردن امتیازها</button>
+        </div>
+        <p class="hint">سطح هوشمند از الگوی انتخاب‌های قبلی تو برای حدس حرکت بعدی استفاده می‌کند؛ اما نتیجه همچنان قطعی نیست.</p>
+      </div>
+    </section>
+
+    <footer class="footer"><span>GAMEHUB <strong>· نسخه 1.0</strong></span><span>ساخته‌شده برای بازی و سرگرمی</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE_KEY = "gamehub-mini-arena-v1";
+      const $ = (selector) => document.querySelector(selector);
+      const symbols = {
+        rock: { name: "سنگ", emoji: "✊" },
+        paper: { name: "کاغذ", emoji: "✋" },
+        scissors: { name: "قیچی", emoji: "✌️" }
+      };
+      const winningLines = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+      ];
+
+      const defaultScores = {
+        ttt: { ai: { x: 0, o: 0, draw: 0 }, pvp: { x: 0, o: 0, draw: 0 } },
+        rps: { player: 0, ai: 0, draw: 0 }
+      };
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) { saved = {}; }
+
+      const state = {
+        activeTab: "ttt",
+        ttt: {
+          mode: "ai", difficulty: "hard", board: Array(9).fill(""),
+          turn: "X", over: false, winner: null, line: null, aiTimer: null
+        },
+        rps: { difficulty: "hard", history: [], round: 0 },
+        scores: {
+          ttt: {
+            ai: { ...defaultScores.ttt.ai, ...(saved.ttt?.ai || {}) },
+            pvp: { ...defaultScores.ttt.pvp, ...(saved.ttt?.pvp || {}) }
+          },
+          rps: { ...defaultScores.rps, ...(saved.rps || {}) }
+        }
+      };
+
+      function persistScores() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.scores)); }
+        catch (_) { showToast("ذخیره امتیازها در مرورگر در دسترس نیست."); }
+      }
+
+      function showToast(message) {
+        const toast = $("#toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => toast.classList.remove("show"), 2100);
+      }
+
+      function setTab(tab) {
+        state.activeTab = tab;
+        document.querySelectorAll(".tab").forEach((button) => {
+          const active = button.dataset.value === tab;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-selected", String(active));
+        });
+        $("#ttt-panel").classList.toggle("active", tab === "ttt");
+        $("#rps-panel").classList.toggle("active", tab === "rps");
+      }
+
+      function scoreCard(label, value, color) {
+        return `<div class="score" style="--accent:${color}"><div class="score-label">${label}</div><div class="score-value">${value}</div></div>`;
+      }
+
+      function renderTttScores() {
+        const score = state.scores.ttt[state.ttt.mode];
+        const labels = state.ttt.mode === "ai"
+          ? ["شما · X", "مساوی", "هوش مصنوعی · O"]
+          : ["بازیکن X", "مساوی", "بازیکن O"];
+        $("#ttt-scores").innerHTML = [
+          scoreCard(labels[0], score.x, "var(--blue)"),
+          scoreCard(labels[1], score.draw, "var(--gold)"),
+          scoreCard(labels[2], score.o, "var(--pink)")
+        ].join("");
+      }
+
+      function tttStatus(message, color = "var(--cyan)") {
+        $("#ttt-status").style.setProperty("--status", color);
+        $("#ttt-status span:last-child").textContent = message;
+      }
+
+      function renderTtt() {
+        renderTttScores();
+        $("#ttt-difficulty-wrap").hidden = state.ttt.mode !== "ai";
+        document.querySelectorAll('[data-action="ttt-mode"]').forEach((button) => {
+          button.classList.toggle("active", button.dataset.value === state.ttt.mode);
+        });
+        $("#ttt-difficulty").value = state.ttt.difficulty;
+        const board = $("#ttt-board");
+        board.innerHTML = "";
+        state.ttt.board.forEach((mark, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = `cell${mark ? ` ${mark.toLowerCase()}` : ""}${state.ttt.line?.includes(index) ? " winner" : ""}`;
+          button.textContent = mark;
+          button.setAttribute("aria-label", `خانه ${index + 1}${mark ? `، ${mark}` : "، خالی"}`);
+          button.disabled = Boolean(mark) || state.ttt.over || (state.ttt.mode === "ai" && state.ttt.turn === "O");
+          button.addEventListener("click", () => playerTttMove(index));
+          board.appendChild(button);
+        });
+      }
+
+      function getTttWinner(board) {
+        for (const line of winningLines) {
+          const [a, b, c] = line;
+          if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+            return { mark: board[a], line };
+          }
+        }
+        return null;
+      }
+
+      function isTttDraw(board) { return board.every(Boolean); }
+
+      function playerTttMove(index) {
+        const game = state.ttt;
+        if (game.over || game.board[index] || (game.mode === "ai" && game.turn !== "X")) return;
+        game.board[index] = game.turn;
+        const result = getTttWinner(game.board);
+        if (result) return finishTtt(result.mark, result.line);
+        if (isTttDraw(game.board)) return finishTtt("draw");
+        if (game.mode === "pvp") {
+          game.turn = game.turn === "X" ? "O" : "X";
+          tttStatus(`نوبت بازیکن ${game.turn}`, game.turn === "X" ? "var(--blue)" : "var(--pink)");
+          renderTtt();
+        } else {
+          game.turn = "O";
+          tttStatus("هوش مصنوعی در حال فکر کردن است…", "var(--gold)");
+          renderTtt();
+          game.aiTimer = setTimeout(computerTttMove, 420);
+        }
+      }
+
+      function finishTtt(winner, line = null) {
+        const game = state.ttt;
+        game.over = true;
+        game.winner = winner;
+        game.line = line;
+        const score = state.scores.ttt[game.mode];
+        if (winner === "draw") {
+          score.draw++;
+          tttStatus("بازی مساوی شد!", "var(--gold)");
+        } else if (winner === "X") {
+          score.x++;
+          tttStatus(game.mode === "ai" ? "آفرین! تو برنده شدی 🎉" : "بازیکن X برنده شد 🎉", "var(--green)");
+        } else {
+          score.o++;
+          tttStatus(game.mode === "ai" ? "این دور را هوش مصنوعی برد." : "بازیکن O برنده شد 🎉", "var(--pink)");
+        }
+        persistScores();
+        renderTtt();
+      }
+
+      function minimax(board, maximizing, depth = 0) {
+        const result = getTttWinner(board);
+        if (result) return result.mark === "O" ? 10 - depth : depth - 10;
+        if (isTttDraw(board)) return 0;
+        if (maximizing) {
+          let best = -Infinity;
+          for (let i = 0; i < 9; i++) if (!board[i]) {
+            board[i] = "O";
+            best = Math.max(best, minimax(board, false, depth + 1));
+            board[i] = "";
+          }
+          return best;
+        }
+        let best = Infinity;
+        for (let i = 0; i < 9; i++) if (!board[i]) {
+          board[i] = "X";
+          best = Math.min(best, minimax(board, true, depth + 1));
+          board[i] = "";
+        }
+        return best;
+      }
+
+      function easyTttMove() {
+        const empty = state.ttt.board.map((v, i) => v ? -1 : i).filter(i => i >= 0);
+        return empty[Math.floor(Math.random() * empty.length)];
+      }
+
+      function mediumTttMove() {
+        const board = state.ttt.board;
+        for (const mark of ["O", "X"]) {
+          for (let i = 0; i < 9; i++) if (!board[i]) {
+            board[i] = mark;
+            const result = getTttWinner(board);
+            board[i] = "";
+            if (result?.mark === mark) return i;
+          }
+        }
+        if (!board[4]) return 4;
+        const choices = [0, 2, 6, 8].filter(i => !board[i]);
+        const pool = choices.length ? choices : [1, 3, 5, 7].filter(i => !board[i]);
+        return pool[Math.floor(Math.random() * pool.length)];
+      }
+
+      function hardTttMove() {
+        const board = state.ttt.board;
+        let best = -Infinity;
+        let moves = [];
+        for (let i = 0; i < 9; i++) if (!board[i]) {
+          board[i] = "O";
+          const score = minimax(board, false);
+          board[i] = "";
+          if (score > best) { best = score; moves = [i]; }
+          else if (score === best) moves.push(i);
+        }
+        return moves[Math.floor(Math.random() * moves.length)];
+      }
+
+      function computerTttMove() {
+        const game = state.ttt;
+        game.aiTimer = null;
+        if (game.over || game.mode !== "ai" || game.turn !== "O") return;
+        const move = game.difficulty === "easy" ? easyTttMove()
+          : game.difficulty === "medium" ? mediumTttMove() : hardTttMove();
+        if (move === undefined) return;
+        game.board[move] = "O";
+        const result = getTttWinner(game.board);
+        if (result) return finishTtt(result.mark, result.line);
+        if (isTttDraw(game.board)) return finishTtt("draw");
+        game.turn = "X";
+        tttStatus("نوبت توست · X", "var(--green)");
+        renderTtt();
+      }
+
+      function newTttRound() {
+        clearTimeout(state.ttt.aiTimer);
+        state.ttt.aiTimer = null;
+        state.ttt.board = Array(9).fill("");
+        state.ttt.turn = "X";
+        state.ttt.over = false;
+        state.ttt.winner = null;
+        state.ttt.line = null;
+        tttStatus(state.ttt.mode === "ai" ? "نوبت توست · X" : "نوبت بازیکن X", "var(--green)");
+        renderTtt();
+      }
+
+      function setTttMode(mode) {
+        if (state.ttt.mode === mode) return;
+        state.ttt.mode = mode;
+        newTttRound();
+      }
+
+      function resetTttScores() {
+        state.scores.ttt[state.ttt.mode] = { x: 0, o: 0, draw: 0 };
+        persistScores();
+        newTttRound();
+        showToast("امتیازهای این حالت صفر شد.");
+      }
+
+      // Rock / Paper / Scissors AI
+      function randomRpsMove() {
+        const choices = Object.keys(symbols);
+        return choices[Math.floor(Math.random() * choices.length)];
+      }
+
+      function counterMove(move) {
+        return ({ rock: "paper", paper: "scissors", scissors: "rock" })[move];
+      }
+
+      function mostFrequentMove(history) {
+        const counts = { rock: 0, paper: 0, scissors: 0 };
+        history.forEach(move => counts[move]++);
+        const max = Math.max(...Object.values(counts));
+        const leaders = Object.keys(counts).filter(move => counts[move] === max);
+        return leaders[Math.floor(Math.random() * leaders.length)];
+      }
+
+      function smartRpsMove() {
+        const history = state.rps.history;
+        if (history.length < 3) return randomRpsMove();
+
+        if (state.rps.difficulty === "medium") {
+          if (Math.random() < 0.72) return counterMove(mostFrequentMove(history.slice(-10)));
+          return randomRpsMove();
+        }
+
+        // Hard AI: looks for repeated two-move sequences, then uses a recency-weighted fallback.
+        if (history.length >= 4 && Math.random() < 0.78) {
+          const a = history[history.length - 2];
+          const b = history[history.length - 1];
+          const predicted = [];
+          for (let i = 0; i < history.length - 2; i++) {
+            if (history[i] === a && history[i + 1] === b) predicted.push(history[i + 2]);
+          }
+          if (predicted.length) return counterMove(mostFrequentMove(predicted));
+        }
+
+        const weights = { rock: 0, paper: 0, scissors: 0 };
+        history.forEach((move, index) => {
+          weights[move] += Math.pow(0.86, history.length - index - 1);
+        });
+        const max = Math.max(...Object.values(weights));
+        const leaders = Object.keys(weights).filter(move => weights[move] === max);
+        const likely = leaders[Math.floor(Math.random() * leaders.length)];
+        return Math.random() < 0.78 ? counterMove(likely) : randomRpsMove();
+      }
+
+      function getRpsOutcome(player, ai) {
+        if (player === ai) return "draw";
+        const wins = { rock: "scissors", paper: "rock", scissors: "paper" };
+        return wins[player] === ai ? "player" : "ai";
+      }
+
+      function renderRpsScores() {
+        const score = state.scores.rps;
+        $("#rps-scores").innerHTML = [
+          scoreCard("برد تو", score.player, "var(--green)"),
+          scoreCard("مساوی", score.draw, "var(--gold)"),
+          scoreCard("برد هوش مصنوعی", score.ai, "var(--pink)")
+        ].join("");
+      }
+
+      function playRps(playerMove) {
+        const aiMove = state.rps.difficulty === "easy" ? randomRpsMove() : smartRpsMove();
+        const outcome = getRpsOutcome(playerMove, aiMove);
+        const score = state.scores.rps;
+        if (outcome === "player") score.player++;
+        else if (outcome === "ai") score.ai++;
+        else score.draw++;
+
+        state.rps.history.push(playerMove);
+        if (state.rps.history.length > 30) state.rps.history.shift();
+        state.rps.round++;
+
+        $("#rps-player-pick").textContent = symbols[playerMove].emoji;
+        $("#rps-ai-pick").textContent = symbols[aiMove].emoji;
+        const result = $("#rps-result");
+        result.className = `rps-result ${outcome === "player" ? "win" : outcome === "ai" ? "loss" : "draw"}`;
+
+        const messages = {
+          player: "این دست را بردی! آفرین 👏",
+          ai: "این دست را هوش مصنوعی برد. دوباره امتحان کن!",
+          draw: "مساوی شد! انتخاب هر دو یکی بود."
+        };
+        result.textContent = `${symbols[playerMove].name} تو در برابر ${symbols[aiMove].name} هوش مصنوعی — ${messages[outcome]}`;
+
+        persistScores();
+        renderRpsScores();
+      }
+
+      function resetRpsScores() {
+        state.scores.rps = { player: 0, ai: 0, draw: 0 };
+        state.rps.history = [];
+        state.rps.round = 0;
+        persistScores();
+        renderRpsScores();
+        $("#rps-player-pick").textContent = "❔";
+        $("#rps-ai-pick").textContent = "🤖";
+        $("#rps-result").className = "rps-result";
+        $("#rps-result").textContent = "امتیازها و سابقه انتخاب‌های هوش مصنوعی پاک شد. دوباره شروع کن!";
+        showToast("امتیازهای سنگ، کاغذ، قیچی صفر شد.");
+      }
+
+      // Central event delegation for controls.
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-action]");
+        if (!button) return;
+        const { action, value } = button.dataset;
+        switch (action) {
+          case "tab": setTab(value); break;
+          case "ttt-mode": setTttMode(value); break;
+          case "ttt-new": newTttRound(); break;
+          case "ttt-reset": resetTttScores(); break;
+          case "rps-move": playRps(value); break;
+          case "rps-reset": resetRpsScores(); break;
+        }
+      });
+
+      $("#ttt-difficulty").addEventListener("change", (event) => {
+        state.ttt.difficulty = event.target.value;
+        showToast("درجه سختی دوز تغییر کرد.");
+      });
+      $("#rps-difficulty").addEventListener("change", (event) => {
+        state.rps.difficulty = event.target.value;
+        state.rps.history = [];
+        showToast("سطح هوش مصنوعی تغییر کرد؛ حافظه قبلی پاک شد.");
+      });
+
+      renderTtt();
+      renderRpsScores();
+    })();
+  </script>
+</body>
+</html>
